@@ -12,11 +12,13 @@ WIP
 Let's Start!
   - Sign up for the first time by filing out the required fields
   - Sign in after second time with registered email address and password
+
 Manage Your Lists
   - Create: create a new list with '+' icon and fill title and body filed then save with save icon
   - Read: click one or search for a list from the lists list with date or a title, if any exist 
   - Update: update an existing list with pen and save icon 
   - Delete: say good bye to a list and click bin icon
+  
 Manage Your Account
   - Is it my account?: yes, it says it is your list on the most right top of the list page (Oops! contact me otherwise...)
   - Click your name and update information you registered with 'Update My Info' on the drop down list 
