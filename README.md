@@ -26,7 +26,7 @@ Manage Your Account
   - Click your name and update information you registered with 'Update My Info' on the drop down list 
   - Choose sign out from the drop down list to say bye for now
 
-### Built With
+### Build With
 HTML, CSS, JavaScript, *SQL*
 
 ### Author
