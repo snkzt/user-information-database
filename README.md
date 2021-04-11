@@ -7,7 +7,7 @@ It can be a todo list, a diary, lyrics... anyform you like.
 Create as many lists as you need, and update or simetimes delete as things has chganged... which is quite normal case.
 
 # Browser
-WIP
+https://peaceful-waters-80621.herokuapp.com/
 
 ## Description
 ### How to Use
