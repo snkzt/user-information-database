@@ -29,7 +29,7 @@ body { /*setting background image flexible to the screen with background colour 
   padding: 5% 5% 5% 5%;
 }
 
-#submit {
+#submit-in, #submit-up {
   color: white;
   background-color: rgb(70, 70, 70);
   margin-top: 0.5rem;

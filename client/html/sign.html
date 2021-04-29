@@ -3,23 +3,26 @@
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel = "stylesheet" href = "../css/sign.css">
-    <!-- <meta name="viewport" content="width=device-width,initial-scale=1">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title> WRITE YOUR WISH TO MAKE IT HAPPEN </title>
   </head>
   <body>
+     <!--Sign in area-->
     <div id="main-container" class="container">
       <h3>Sign In</h3>
       <div class="signin-form">
-        <form action="" method="" id="user-signin" accept-charset="UTF-8">
+         <!--Sign in form-->
+        <form action="/html/sign.html" method="post" name="frm" id="user-signin" accept-charset="UTF-8">
           <input class="form-control mt-3" type="text" id="name" name="user_name" placeholder="username" required>
           <input class="form-control" type="password" id="password" name="password" placeholder="password" required>
-          <input class="form-control" type="submit" id="submit" name="submit" value="Welcome Back">
+          <input class="form-control" type="submit" id="submit-in" name="submit" value="Welcome Back">
           <div class="signup-trigger mt-3">
             <a href="#" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up</a>
           </div>
         </form>
       </div>
     </div>
+    <!--Sign up area-->
     <div class="container">
       <div class="row justify-content-md-center">
         <div id="signup-modal" class="modal fade text-center" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
@@ -29,23 +32,24 @@
                 <h2 class="modal-title">Sign Up</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
               </div>
-                <form id="signup-form" class="form-group container-fluid mb-3">
-                  <input class="form-control mt-3" type="text" id="reg_name" name="user_name"  placeholder="username" required>
-                  <input class="form-control mt-2" type="password" id="red_password" name="password" placeholder="password" required>
-                  <input class="form-control mt-2 mb-3" type="password" id="confirm_password" name="password" placeholder="confirm password" required>
+                <!--Sign up form-->
+                <form action="/html/sign.html" method="post" name="frm" id="signup-form" class="form-group container-fluid mb-3">
+                  <input class="form-control mt-3" type="text" id="reg_name" name="reg_name"  placeholder="username" required>
+                  <input class="form-control mt-2" type="password" id="reg_password" name="reg_password" placeholder="password" required>
+                  <input class="form-control mt-2 mb-3" type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" required>
                   <!-- Alert fail username taken -->
                   <div class="mt-3 user-already-exists alert alert-danger" role="alert" style="display:none;">
                     User name already taken
                   </div>
                   <!-- Alert fail password mismatch -->
-                  <div class="mt-3 wrong-password alert  alert-danger" role="alert" style="display:none;">
+                  <div class="mt-3 wrong-password alert alert-danger" role="alert" style="display:none;">
                     Password doesn't match!
                   </div>
                   <!-- Alert success -->
                   <div class="mt-3 sign-up-success alert alert-success" role="alert" style="display:none;">
                     Account created! Signing in...
                   </div>
-                  <input class="form-control" type="submit" id="submit" name="submit" value="Register">
+                  <input class="form-control" type="submit" id="submit-up" name="submit" value="Register">
                 </form>
             </div>
           </div>
