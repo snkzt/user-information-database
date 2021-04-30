@@ -52,11 +52,4 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }...`))
         }
       });
     }
-
-    // db.close((err) => {
-    //   if (err) {
-    //     return console.error(err.message);
-    //   }
-    //   console.log('Close the database connection.');
-    // });
   });
