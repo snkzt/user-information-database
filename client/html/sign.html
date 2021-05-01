@@ -8,7 +8,7 @@
   </head>
   <body>
      <!--Sign in area-->
-    <div id="main-container" class="container">
+    <div class="container" id="main-container">
       <h3>Sign In</h3>
       <div class="signin-form">
          <!--Sign in form-->
@@ -25,7 +25,7 @@
     <!--Sign up area-->
     <div class="container">
       <div class="row justify-content-md-center">
-        <div id="signup-modal" class="modal fade text-center" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal fade text-center" id="signup-modal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -33,7 +33,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
               </div>
                 <!--Sign up form-->
-                <form action="/html/sign.html" method="post" name="frm" id="signup-form" class="form-group container-fluid mb-3">
+                <form action="/" method="post" name="frm" id="signup-form" class="form-group container-fluid mb-3">
                   <input class="form-control mt-3" type="text" id="reg_name" name="reg_name"  placeholder="username" required>
                   <input class="form-control mt-2" type="password" id="reg_password" name="reg_password" placeholder="password" required>
                   <input class="form-control mt-2 mb-3" type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" required>
