@@ -12,9 +12,13 @@
       <h3>Sign In</h3>
       <div class="signin-form">
          <!--Sign in form-->
-        <form action="/html/sign.html" method="post" name="frm" id="user-signin" accept-charset="UTF-8">
+        <form name="signin-frm" id="signin-frm" accept-charset="UTF-8">
           <input class="form-control mt-3" type="text" id="name" name="user_name" placeholder="username" required>
           <input class="form-control" type="password" id="password" name="password" placeholder="password" required>
+           <!-- Alert fail user not exists -->
+           <div class="mt-3 user-not-exists alert alert-danger" role="alert" style="display:none;">
+            User doesn't exist!
+          </div>
           <input class="form-control" type="submit" id="submit-in" name="submit" value="Welcome Back">
           <div class="signup-trigger mt-3">
             <a href="#" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up</a>
@@ -33,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
               </div>
                 <!--Sign up form-->
-                <form action="/" method="post" name="frm" id="signup-form" class="form-group container-fluid mb-3">
+                <form name="signup-frm" id="signup-frm" class="form-group container-fluid mb-3">
                   <input class="form-control mt-3" type="text" id="reg_name" name="reg_name"  placeholder="username" required>
                   <input class="form-control mt-2" type="password" id="reg_password" name="reg_password" placeholder="password" required>
                   <input class="form-control mt-2 mb-3" type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" required>
@@ -61,7 +65,7 @@
         <div class="row">
           <div class="col">
             <p id="app-title">
-              <a id="homelink" href="../html/home.html">
+              <a id="homelink" href="./home.html">
               WRITE YOUR WISH
               <br>
               　TO MAKE IT HAPPEN

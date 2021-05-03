@@ -10,36 +10,51 @@
     <header>
       <div class="container" id="user">
         <p id="hi">
-          <span id=user_name>a</span>'s list /  <a id="linkA" href="../html/sign.html" target="_blank">Sign out</a>
+          <span id=user_name>a</span>'s list /  <a id="linkA" href="./sign.html" target="_blank">Sign out</a>
         </p>
       </div>
     </header>
-     <!--Sign in area-->
     <div class="container" id="main-container" >
-      <section style="display: table;">
-        <header style="display: table-row;">
-          <div style="display: table-cell;">Create Date</div>
-          <div style="display: table-cell;">Due Date</div>
-          <div style="display: table-cell;">Wish / Todo</div>
-          <div style="display: table-cell;"> 
-            <button type="button" name="delete" value="">
-              <img src="">
-            </button>
-          </div>
-        </header>
-        <div style="display: table-row;">
-          <div style="display: table-cell;"></div>
-          <div style="display: table-cell;"></div>
-          <div style="display: table-cell;"></div>
+      <div id="row1" class="row">
+        <div class="col-2" id="today"><label for="today">Create Date</label></br></br>20210502</div>
+        <div class="container col-8" id="form">
+          <form class="form-inline" action="/html/main.html" method="post" name="frm" id="user-signin" accept-charset="UTF-8">
+            <div class="inline" id="duedate">
+              <label for="due">Due Date</label>
+              <input class="form-control" type="text" id="due" name="due">
+            </div>
+            <div class="inline" id="wishtodo">
+              <label for="todo">Wish / Todo</label>
+              <input class="form-control" type="text" id="todo" name="todo" required>
+            </div>
+            <div class="inline" id="savebutton">
+              <input class="form-control" type="submit" id="save" name="submit" value="Save">
+            </div>
+          </form>
         </div>
-      </section>
+        <div class="col" id="edit">
+          <button  type="button" name="edit">
+            <img src="../image/pencil.svg">
+          </button>
+        </div>
+        <div class="col" id="delete">
+          <button type="button" name="delete">
+            <img src="../image/trash.svg">
+          </button>
+        </div>
+      </div>
+      <div id="row2" class="row">
+        <div class="col-2" id="cdate">cdate</div>
+        <div class="col-3" id="ddate">dudate</div>
+        <div class="col-5" id="wtlist">text</div>
+      </div>
     </div>
     <footer>
       <div class="container">
         <div class="row">
           <div class="col">
             <p id="app-title">
-              <a id="homelink" href="../html/home.html">
+              <a id="homelink" href="./home.html">
               WRITE YOUR WISH
               <br>
               　TO MAKE IT HAPPEN
