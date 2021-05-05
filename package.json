@@ -22,8 +22,6 @@
     "ejs": "^2.5.6",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "http-errors": "^1.8.0",
-    "http-status-codes": "^2.1.4",
     "sqlite3": "^5.0.2"
   },
   "bugs": {

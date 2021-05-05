@@ -11,6 +11,7 @@ async function postData(url = '', data = {}) {
     redirect: 'follow',
     body: JSON.stringify(data)
   });
+
   const status = response.status;
   const res = await response.json();
   return { status: status, response: res }
@@ -25,18 +26,17 @@ inForm.addEventListener('submit', (frm) => {
     user_name: frm.target.elements[0].value,
     password: frm.target.elements[1].value
   }
-  console.log('a')
-  postData('/h', usrData)
+
+  postData('/signin', usrData)
     .then(data => {
-      if (data.status === 205) {
+      if (data.status === 200) {
+        return window.location.replace('../html/main.html')
+      } else { 
         document.querySelector('.user-not-exists').style.display = 'block'
-        inForm.reset();
-        return window.location.assign('../html/sign.html')
-      } else {
-        return window.location.assign('../html/main.html')
+        document.addEventListener('click', clear => window.location.reload('../html/sign.html'));
       }
     })
-  });
+});
 
 // Create new user and proceed to the main page
 upForm.addEventListener('submit', (frm) => {
@@ -51,20 +51,17 @@ upForm.addEventListener('submit', (frm) => {
   if (document.getElementById('confirm_password').value !== regData.reg_password) {
     document.querySelector('.wrong-password').style.display = 'block';
   } else {
-    postData('/h', regData)
+    postData('/signup', regData)
       .then((data) => {
         if (data.status === 201) {
-          document.querySelector('.sign-up-success').style.display = 'block'
-          return window.location.assign('../html/main.html')
-        } else if (data.staus !== 201) {
-          document.querySelector('.user-already-exists').style.display = 'block'
+          return window.location.replace('../html/main.html')
+        } else {
+          document.querySelector('.user-already-exists').style.display = 'block';
+          upForm.addEventListener('click', clear => upForm.reset(), {once: true});
         }
       })
   }
 });
-
-inForm.reset();
-upForm.reset();
 
 document.addEventListener('click', (alertPop) => {
 	document.querySelectorAll('.alert').forEach((alert) => {
