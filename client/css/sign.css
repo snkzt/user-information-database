@@ -1,11 +1,11 @@
 html { 
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body { /*setting background image flexible to the screen with background colour for a case of fall over*/
   background-color: rgba(162, 176, 255, 1);
-  background-image:  linear-gradient(90deg,#ff7e346b 20%, #a0a3ff2f 50%, #f5ca6d42 95%), url("../image/mainBgPic.jpg") !important;
+  background-image:  linear-gradient(90deg,#ff7e346b 20%, #a0a3ff2f 50%, #f5ca6d42 95%), url("../image/mainBgPic.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;

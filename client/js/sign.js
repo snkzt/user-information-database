@@ -1,5 +1,7 @@
 const inForm = document.getElementById('signin-frm');
 const upForm = document.getElementById('signup-frm');
+inForm.addEventListener('submit', inCheck);
+upForm.addEventListener('submit', upCheck);
 
 // POST data and get response to use the result for user check
 async function postData(url = '', data = {}) {
@@ -18,52 +20,70 @@ async function postData(url = '', data = {}) {
 }
 
 // Check user existence
-inForm.addEventListener('submit', (frm) => {
-  frm.preventDefault();
+function inCheck (e)　{
+  e.preventDefault();
   document.querySelector('.alert').style.display = 'none';
-
+  
   const usrData = {
-    user_name: frm.target.elements[0].value,
-    password: frm.target.elements[1].value
+    user_name: e.target.elements[0].value,
+    password: e.target.elements[1].value
   }
 
   postData('/signin', usrData)
-    .then(data => {
-      if (data.status === 200) {
-        return window.location.replace('../html/main.html')
-      } else { 
-        document.querySelector('.user-not-exists').style.display = 'block'
-        document.addEventListener('click', clear => window.location.reload('../html/sign.html'));
-      }
-    })
-});
+  .then(async data => {
+    if (data.status === 200) {
+      await authenticated();
+    } else if (data.response.password === false) { 
+      document.querySelector('.password-not-match').style.display = 'block'
+      inForm.addEventListener('click', clearPw, {once: true});
+    } else {
+      document.querySelector('.user-not-exists').style.display = 'block'
+      return document.addEventListener('click', () => window.location.reload('/sign'));
+    }
+  })
+};
 
 // Create new user and proceed to the main page
-upForm.addEventListener('submit', (frm) => {
-  frm.preventDefault();
+function upCheck (e) {
+  e.preventDefault();
   document.querySelector('.alert').style.display = 'none';
 
   const regData = {
-    reg_name: frm.target.elements[0].value,
-    reg_password: frm.target.elements[1].value
+    reg_name: e.target.elements[0].value,
+    reg_password: e.target.elements[1].value
   }
 
   if (document.getElementById('confirm_password').value !== regData.reg_password) {
     document.querySelector('.wrong-password').style.display = 'block';
+    upForm.addEventListener('click', clearPw, {once: true});
   } else {
     postData('/signup', regData)
-      .then((data) => {
+      .then(async (data) => {
         if (data.status === 201) {
-          return window.location.replace('../html/main.html')
+          await authenticated();
         } else {
           document.querySelector('.user-already-exists').style.display = 'block';
-          upForm.addEventListener('click', clear => upForm.reset(), {once: true});
+          upForm.addEventListener('click', () => upForm.reset(), {once: true});
         }
       })
   }
-});
+};
 
-document.addEventListener('click', (alertPop) => {
+function clearPw (e) {
+  document.getElementById('password').value = '';
+  document.getElementById('reg_password').value = '';
+  document.getElementById('confirm_password').value = '';
+}
+
+async function authenticated() {
+  await fetch('/main')
+    .then(response => response.json())
+    .then(data => {console.log('l81 in sign.js'), console.log(data)})
+    window.location.replace('../html/main.html')
+    // inForm.addEventListener('click', () => { window.location.replace('../html/main.html') })
+}
+
+document.addEventListener('click', () => {
 	document.querySelectorAll('.alert').forEach((alert) => {
 		alert.style.display = 'none'
 	})
