@@ -72,10 +72,10 @@ const signUp = async (req, res) => {
         res.sendStatus(err.code).send(`${error.name}: ${err.message}`);
       }
     } else {
-      const dataC = await db.create(name, hashedPassword);
-      console.log(message = "1 new record added");
+      const dataC = await db.createUser(name, hashedPassword);
+      console.log(message = "1 new user added");
       const authenticatedUser = { id: dataC.user_id, name: dataC.user_name }
-      if (dataC) {
+      if (dataC.user_id) {
         const accessToken = await setToken(authenticatedUser);
         res.setHeader("Set-Cookie", cookie.serialize("AccessToken", accessToken,  { httpOnly: true }))
         res.status(201).send({ existing: false, created: true });
@@ -90,8 +90,8 @@ const signUp = async (req, res) => {
   }
 };
 
-// Crear Cookie to unable a user to log out
-const logOut = async (req, res, next) => {
+// Crear Cookie to unable a user to sign out
+const signOut = async (req, res, next) => {
   res.setHeader("Set-Cookie", cookie.serialize("AccessToken", "",  { httpOnly: true }))
   res.status(200)
   next();
@@ -114,10 +114,82 @@ function authenticateToken (req, res, next) {
   });
 }
 
+// Get user's lists on the sign in
+const getList = async (req, res) => {
+  const usrId = req.body.id;
+  const lists = await db.getList(usrId);
+
+  if(lists) {
+    res.lists = lists
+    res.status(200).send(res.lists);
+  } else {
+    console.log("Could not retrieve lists")
+    res.status(500).send({ existing: false });
+  }
+};
+
+// Save new list
+const createList =  async (req, res) => {
+  const usrId = req.body.user_id;
+  const cDate = req.body.create_date;
+  const dDate = req.body.due_date;
+  const item = req.body.item;
+  await db.createList(usrId, cDate, dDate, item);
+  const newList = await db.getList(usrId);
+
+  if(newList) {
+    console.log(message = "1 new list added");
+    res.list = newList
+    res.status(200).send(res.list);
+  } else {
+    console.log("Save failed")
+    res.status(500).send({ existing: false });
+  }
+};
+
+// Save updated list 
+const updateList = async (req, res) => {
+  const itemId = req.body.item_id;
+  const usrId = req.body.user_id;
+  const dDate = req.body.due_date;
+  const item = req.body.item;
+  await db.updateList(itemId, usrId, dDate, item);
+  const updatedList = await db.getList(usrId);
+
+  if(updatedList) {
+    res.lists = updatedList
+    res.status(200).send(res.lists);
+  } else {
+    console.log("Could not retrieve lists")
+    res.status(500).send({ existing: false });
+  }
+};
+
+// Save updated list 
+const deleteList = async (req, res) => {
+  const itemId = req.body.item_id;
+  const usrId = req.body.user_id;
+  await db.deleteList(itemId, usrId);
+  const deletedList = await db.getList(usrId);
+
+  if(deletedList) {
+    console.log("1 list deleted")
+    res.lists = deletedList
+    res.status(200).send(res.lists);
+  } else {
+    console.log("Could not retrieve lists")
+    res.status(500).send({ existing: false });
+  }
+};
+
 module.exports = {
   routeAccessibility,
   signIn,
   signUp,
-  logOut,
-  authenticateToken
+  signOut,
+  authenticateToken,
+  getList,
+  createList,
+  updateList,
+  deleteList
 }

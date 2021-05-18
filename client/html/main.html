@@ -10,18 +10,19 @@
     <header>
       <div class="container" id="user">
         <p id="hi">
-          <span id=user_name>a</span>'s list /  <a id="linkA" href="/logout">Sign out</a>
+          <span id=signingin-user></span>'s list /  <a id="linkA" href="/signout">Sign out</a>
         </p>
       </div>
     </header>
-    <div class="container" id="main-container" >
+    <div class="container overflow-scroll" id="main-container" >
       <div id="row1" class="row">
-        <div class="col-2" id="today"><label for="today">Create Date</label></br></br>20210502</div>
-        <div class="container col-8" id="form">
-          <form class="form-inline" action="/html/main.html" method="post" name="frm" id="user-signin" accept-charset="UTF-8">
+        <div class="col-2" id="create-day"><label for="create-day">Create Date</label></br></br><p id="today"></p></div>
+        <div class="container col-9" id="form">
+          <form name="list-frm" id="list-frm" class="form-inline">
+            <input type="hidden" id="item_id" name="item_id" value="" >
             <div class="inline" id="duedate">
               <label for="due">Due Date</label>
-              <input class="form-control" type="text" id="due" name="due">
+              <input class="form-control" type="date" id="due" name="due">
             </div>
             <div class="inline" id="wishtodo">
               <label for="todo">Wish / Todo</label>
@@ -32,21 +33,23 @@
             </div>
           </form>
         </div>
-        <div class="col" id="edit">
-          <button  type="button" name="edit">
-            <img src="../image/pencil.svg">
-          </button>
-        </div>
         <div class="col" id="delete">
-          <button type="button" name="delete">
+          <button id="delete-button" type="button" name="delete">
             <img src="../image/trash.svg">
           </button>
         </div>
       </div>
       <div id="row2" class="row">
-        <div class="col-2" id="cdate">cdate</div>
-        <div class="col-3" id="ddate">dudate</div>
-        <div class="col-5" id="wtlist">text</div>
+        <table class="table table-striped table-hover" id="list">
+          <thead>
+            <tr>
+              <th scope="col">List id</th>
+              <th scope="col">Create date</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Wish / Todo</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
     <footer>

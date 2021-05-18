@@ -20,7 +20,7 @@ async function postData(url = '', data = {}) {
 }
 
 // Check user existence
-function inCheck (e)　{
+function inCheck(e)　{
   e.preventDefault();
   document.querySelector('.alert').style.display = 'none';
   
@@ -44,7 +44,7 @@ function inCheck (e)　{
 };
 
 // Create new user and proceed to the main page
-function upCheck (e) {
+function upCheck(e) {
   e.preventDefault();
   document.querySelector('.alert').style.display = 'none';
 
@@ -69,7 +69,7 @@ function upCheck (e) {
   }
 };
 
-function clearPw (e) {
+function clearPw(e) {
   document.getElementById('password').value = '';
   document.getElementById('reg_password').value = '';
   document.getElementById('confirm_password').value = '';
@@ -77,11 +77,8 @@ function clearPw (e) {
 
 async function authenticated() {
   await fetch('/main')
-    .then(response => response.json())
-    .then(data => {console.log('l81 in sign.js'), console.log(data)})
-    window.location.replace('../html/main.html')
-    // inForm.addEventListener('click', () => { window.location.replace('../html/main.html') })
-}
+    .then(window.location.replace('../html/main.html'))
+  }
 
 document.addEventListener('click', () => {
 	document.querySelectorAll('.alert').forEach((alert) => {
