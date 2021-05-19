@@ -48,15 +48,15 @@ async function postData(url = '', data = {}) {
 }
 
 // Save a list
-function saveList(e)　{
+function saveList(e) {
   e.preventDefault();
-  console.log(e.target.elements[0].value)
+
   if (!e.target.elements[0].value) {
     newList(e)
   } else {
     modifiedList(e)
   }
-};
+}
 
 // Save new list
 function newList(e) {
@@ -66,7 +66,7 @@ function newList(e) {
     due_date: e.target.elements[1].value,
     item: e.target.elements[2].value
   }
-  
+
   postData('/createlist', listData)
   .then(async data => {
     lists = await data.response;
@@ -95,7 +95,7 @@ function modifiedList(e) {
 }
 
 // Delete a list
-function deleteList(e) {
+function deleteList() {
   const listData = {
     item_id: listForm[0].value,
     user_id: userInfo.id
@@ -135,7 +135,7 @@ function showLists(lists) {
   });
 }
 
-function clearInput(e) {
+function clearInput() {
   document.getElementById('item_id').value = '';
   document.getElementById('due').value = '';
   document.getElementById('todo').value = '';

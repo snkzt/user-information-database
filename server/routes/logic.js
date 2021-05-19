@@ -9,9 +9,13 @@ const cookie = require("cookie");
 const routeAccessibility = async (req, res, next) => {
   const authCookie = req.cookies.AccessToken;
   if (authCookie) {
-    jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => { // user is a value serialised wich is authenticatedUser
-      if (err) return res.sendStatus(403);
-      res.redirect('/authenticated');
+    jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(403);
+      } else {
+        res.redirect('/authenticated');
+      }
     });
   } else {  
     next();
@@ -30,27 +34,27 @@ const signIn =  async (req, res) => {
       const err = data.err;
       if (id && uName) {
         await bcrypt.compare(pw, data.password).then(async (result) => {
-        const authenticatedUser = { id: id, name: uName };
-        if (result) {
-          const accessToken = await setToken(authenticatedUser);
-          res.setHeader("Set-Cookie", cookie.serialize("AccessToken", accessToken,  { httpOnly: true }))
-          res.status(200).send({ existing: true });
-        } else {
-          console.log("Incorrect password");
-          res.status(401).send({ existing: true, password: false });
-        }
+          const authenticatedUser = { id: id, name: uName };
+          if (result) {
+            const accessToken = await setToken(authenticatedUser);
+            res.setHeader("Set-Cookie", cookie.serialize("AccessToken", accessToken,  { httpOnly: true }))
+            res.status(200).send({ existing: true });
+          } else {
+            console.log("Incorrect password");
+            res.status(401).send({ existing: true, password: false });
+          }
         });
       } else {
         console.error(err);
-        res.sendStatus(err.code).send(`${error.name}: ${err.message}`);
+        res.sendStatus(err.code).send(`${err.name}: ${err.message}`);
       } 
     } else {
       console.log("No record matches");
       res.status(401).send({ existing: false });
     }
   } else {
-    console.error(err);
-    res.sendStatus(err.code).send(`${error.name}: ${err.message}`);
+    console.error('User name input empty');
+    res.sendStatus(400).send({ input: false });
   }
 };
 
@@ -69,11 +73,11 @@ const signUp = async (req, res) => {
         res.status(401).send({ existing: false, created: false });
       } else {
         console.error(err);
-        res.sendStatus(err.code).send(`${error.name}: ${err.message}`);
+        res.sendStatus(err.code).send(`${err.name}: ${err.message}`);
       }
     } else {
       const dataC = await db.createUser(name, hashedPassword);
-      console.log(message = "1 new user added");
+      console.log("1 new user added");
       const authenticatedUser = { id: dataC.user_id, name: dataC.user_name }
       if (dataC.user_id) {
         const accessToken = await setToken(authenticatedUser);
@@ -85,8 +89,8 @@ const signUp = async (req, res) => {
       }
     }
   } else {
-    console.error(err)
-    res.sendStatus(400).send({ existing: err });
+    console.error('User name input empty');
+    res.sendStatus(400).send({ input: false });
   }
 };
 
@@ -138,7 +142,7 @@ const createList =  async (req, res) => {
   const newList = await db.getList(usrId);
 
   if(newList) {
-    console.log(message = "1 new list added");
+    console.log("1 new list added");
     res.list = newList
     res.status(200).send(res.list);
   } else {

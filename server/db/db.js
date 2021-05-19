@@ -44,7 +44,7 @@ async function checkUp (name) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 async function createUser (name, hashedPassword) {
   try {
@@ -54,7 +54,7 @@ async function createUser (name, hashedPassword) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 async function getList (usrId) {
   try {
@@ -63,7 +63,7 @@ async function getList (usrId) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 async function createList (usrId, cDate, dDate, item) {
   try {
@@ -71,7 +71,7 @@ async function createList (usrId, cDate, dDate, item) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 async function updateList (itemId, usrId, dDate, item) {
   try {
@@ -79,7 +79,7 @@ async function updateList (itemId, usrId, dDate, item) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 async function deleteList (itemId, usrId) {
   try {
@@ -87,7 +87,7 @@ async function deleteList (itemId, usrId) {
   } catch (err) {
      return(err);
   }
-};
+}
 
 
 

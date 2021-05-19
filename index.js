@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
-const db = require('./server/db/db');
+const cookieParser = require('cookie-parser');
 const logic = require('./server/routes/logic');
 const PORT = process.env.PORT || 5000;
 

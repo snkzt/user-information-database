@@ -20,7 +20,7 @@ async function postData(url = '', data = {}) {
 }
 
 // Check user existence
-function inCheck(e)　{
+function inCheck(e) {
   e.preventDefault();
   document.querySelector('.alert').style.display = 'none';
   
@@ -41,7 +41,7 @@ function inCheck(e)　{
       return document.addEventListener('click', () => window.location.reload('/sign'));
     }
   })
-};
+}
 
 // Create new user and proceed to the main page
 function upCheck(e) {
@@ -67,9 +67,9 @@ function upCheck(e) {
         }
       })
   }
-};
+}
 
-function clearPw(e) {
+function clearPw() {
   document.getElementById('password').value = '';
   document.getElementById('reg_password').value = '';
   document.getElementById('confirm_password').value = '';
