@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel = "stylesheet" href = "../css/main.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title> WRITE YOUR WISH TO MAKE IT HAPPEN </title>
+  </head>
+  <body>
+    <header>
+      <div class="container" id="user">
+        <p id="hi">
+          <span id=signingin-user></span>'s list /  <a id="linkA" href="/signout">Sign out</a>
+        </p>
+      </div>
+    </header>
+    <div class="container overflow-scroll" id="main-container" >
+      <div id="row1" class="row">
+        <div class="col-2" id="create-day"><label for="create-day">Create Date</label></br></br><p id="today"></p></div>
+        <div class="container col-9" id="form">
+          <form name="list-frm" id="list-frm" class="form-inline">
+            <input type="hidden" id="item_id" name="item_id" value="" >
+            <div class="inline" id="duedate">
+              <label for="due">Due Date</label>
+              <input class="form-control" type="date" id="due" name="due">
+            </div>
+            <div class="inline" id="wishtodo">
+              <label for="todo">Wish / Todo</label>
+              <input class="form-control" type="text" id="todo" name="todo" required>
+            </div>
+            <div class="inline" id="savebutton">
+              <input class="form-control" type="submit" id="save" name="submit" value="Save">
+            </div>
+          </form>
+        </div>
+        <div class="col" id="delete">
+          <button id="delete-button" type="button" name="delete">
+            <img src="../image/trash.svg">
+          </button>
+        </div>
+      </div>
+      <div id="row2" class="row">
+        <table class="table table-striped table-hover" id="list">
+          <thead>
+            <tr>
+              <th scope="col">List id</th>
+              <th scope="col">Create date</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Wish / Todo</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <p id="app-title">
+              <a id="homelink" href="/">
+              WRITE YOUR WISH
+              <br>
+              　TO MAKE IT HAPPEN
+              </a>
+            </p>
+          </div>
+          <div class="col">
+            <div id="credit">
+              <p id="contact">
+                CONTACT / CREDIT
+              </p>
+              <a id="link" href="https://github.com/snkzt" target="_blank">snkzt</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

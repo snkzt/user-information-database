@@ -1,11 +1,11 @@
 html { 
-  width : 100%;
-  height : 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body { /*setting background image flexible to the screen with background colour for a case of fall over*/
   background-color: rgba(162, 176, 255, 1);
-  background-image:  linear-gradient(90deg,#ff7e346b 20%, #a0a3ff2f 50%, #f5ca6d42 95%), url("../image/mainBgPic.jpg") !important;
+  background-image:  linear-gradient(90deg,#ff7e346b 20%, #a0a3ff2f 50%, #f5ca6d42 95%), url("../image/mainBgPic.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;
@@ -25,11 +25,11 @@ body { /*setting background image flexible to the screen with background colour 
   max-width: 30%;
   max-height: 30%;
   margin-top: 10%;
-  margin-bottom: 15%;
+  margin-bottom: 21%;
   padding: 5% 5% 5% 5%;
 }
 
-#submit {
+#submit-in, #submit-up {
   color: white;
   background-color: rgb(70, 70, 70);
   margin-top: 0.5rem;
