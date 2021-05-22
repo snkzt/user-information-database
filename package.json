@@ -4,8 +4,11 @@
   "description": "*MAKE YOUR WISH TO MAKE IT HAPPEN*",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "mocha || true",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "lintfix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -35,10 +38,13 @@
   },
   "homepage": "https://github.com/snkzt/user-information-database#readme",
   "devDependencies": {
+    "chai": "^4.3.4",
     "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1"
+    "eslint-plugin-promise": "^4.3.1",
+    "mocha": "^8.4.0"
   }
 }

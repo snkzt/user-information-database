@@ -92,7 +92,7 @@ label {
   font-weight: bold;
 }
 
-#credit, #delete {
+#create, #delete {
   padding-top: 35px;
   margin-bottom: 3%;
   text-align: left;
