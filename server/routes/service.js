@@ -9,63 +9,56 @@ const db = require('../db/db');
 function checkAuthStatus(authCookie) {
   jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return '403';
     }
+    return '200';
   });
 }
 
 // Check user existense
 async function signInDbQuery(name, pw) {
-  let checkedReturn;
   const data = await db.checkIn(name);
   if (data) {
     const id = data.user_id;
     const uName = data.user_name;
     const err = data;
     if (id && uName) {
-      await bcrypt.compare(pw, data.password)
-        .then(async (result) => {
-          const authenticatedUser = { id, name: uName };
-          if (result) {
-            checkedReturn = setToken(authenticatedUser);
-          } else {
-            checkedReturn = '401';
-          }
-        });
-    } else {
-      console.error(err);
-    }
-  } else {
-    checkedReturn = '404';
-  }
-  return checkedReturn;
+      const result = await bcrypt.compare(pw, data.password)
+      const authenticatedUser = { id, name: uName };
+      if (result) {
+        const accessToken = setToken(authenticatedUser);
+        return accessToken;
+      } 
+      return '401';
+    } 
+    console.error(err);
+    return '404';
+  } 
+  return '404';
 }
 
 // Create a new user
 async function signUpDbQuery(name, pw) {
-  let createdReturn;
   const hashedPassword = await bcrypt.hash(pw, saltRounds);
   const data = await db.checkUp(name);
   if (data) {
     const uName = data.user_name;
     const err = data;
     if (uName) {
-      createdReturn = '401';
-    } else {
-      console.error(err);
-    }
+      return '401';
+    } 
+    console.error(err);
+    return '500'
   } else {
     const dataC = await db.createUser(name, hashedPassword);
     console.log('1 new user added');
     const authenticatedUser = { id: dataC.user_id, name: dataC.user_name };
     if (dataC.user_id) {
-      createdReturn = setToken(authenticatedUser);
-    } else {
-      createdReturn = '500';
-    }
+      return setToken(authenticatedUser);
+    } 
+    return '500';
   }
-  return createdReturn;
 }
 
 function setToken(authenticatedUser) {
@@ -75,70 +68,55 @@ function setToken(authenticatedUser) {
 
 // Middlewear for sending cookie information to client side
 function tokenCheck(authCookie) {
-  let checkedToken;
   if (authCookie === null) {
-    checkedToken = '401';
-  } else {
-    jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) {
-        checkedToken = '403';
-      } else {
-        checkedToken = user;
-      }
-    });
-  }
-  return checkedToken;
+    return '401';
+  } 
+  jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.error(err);
+      return '403';
+    } 
+      return user;
+  });
 }
 
 // Get user's lists on the sign in
 async function queryList(usrId) {
-  let queryResult;
   const lists = await db.getList(usrId);
   if (lists) {
-    queryResult = lists;
-  } else {
-    queryResult = '500';
+    return lists;
   }
-  return queryResult;
+  return'500';
 }
 
 // Save new list
 async function newList(usrId, cDate, dDate, item) {
-  let createdList;
   await db.createList(usrId, cDate, dDate, item);
   const addedList = await db.getList(usrId);
   if (addedList) {
-    createdList = addedList;
-  } else {
-    createdList = '500';
+    return addedList;
   }
-  return createdList;
+  return '500';
 }
 
 // Save updated list
 async function updatedList(itemId, usrId, dDate, item) {
-  let modifiedList;
   await db.updateList(itemId, usrId, dDate, item);
   const updatedList = await db.getList(usrId);
   if (updatedList) {
-    modifiedList = updatedList;
-  } else {
-    modifiedList = '500';
-  }
-  return modifiedList;
+    return updatedList;
+  } 
+  return '500';
 }
 
 // Delete list
 async function deletedList(itemId, usrId) {
-  let deletedList;
   await db.deleteList(itemId, usrId);
   const changedList = await db.getList(usrId);
   if (changedList) {
-    deletedList = changedList;
-  } else {
-    deletedList = '500';
-  }
-  return deletedList;
+    return changedList;
+  } 
+  return '500';
 }
 
 module.exports = {
