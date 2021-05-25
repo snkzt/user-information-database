@@ -7,13 +7,14 @@ const db = require('../db/db');
 
 // Check if the user is already authenticated
 function checkAuthStatus(authCookie) {
-  jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err) => {
+  const authenticated = jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err) => {
     if (err) {
       console.error(err);
       return '403';
     }
     return '200';
   });
+  return authenticated;
 }
 
 function setToken(authenticatedUser) {
@@ -65,18 +66,19 @@ async function signUpDbQuery(name, pw) {
   return '500';
 }
 
-// Middlewear for sending cookie information to client side
+// Middleware for sending cookie information to client side
 function tokenCheck(authCookie) {
   if (authCookie === null) {
     return '401';
   }
-  jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  const token = jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       console.error(err);
       return '403';
     }
     return user;
   });
+  return token;
 }
 
 // Get user's lists on the sign in
