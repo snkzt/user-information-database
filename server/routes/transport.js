@@ -8,8 +8,8 @@ const routeAccessibility = (req, res, next) => {
     const returnCheckAuth = service.checkAuthStatus(authCookie);
     if (returnCheckAuth === '403') {
       return res.sendStatus(403);
-    } else if (returnCheckAuth === '200') {
-    res.redirect('/authenticated');
+    } if (returnCheckAuth === '200') {
+      res.redirect('/authenticated');
     }
   } else {
     next();

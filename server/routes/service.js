@@ -16,6 +16,11 @@ function checkAuthStatus(authCookie) {
   });
 }
 
+function setToken(authenticatedUser) {
+  const accessToken = jwt.sign(authenticatedUser, process.env.ACCESS_TOKEN_SECRET);
+  return accessToken;
+}
+
 // Check user existense
 async function signInDbQuery(name, pw) {
   const data = await db.checkIn(name);
@@ -24,17 +29,17 @@ async function signInDbQuery(name, pw) {
     const uName = data.user_name;
     const err = data;
     if (id && uName) {
-      const result = await bcrypt.compare(pw, data.password)
+      const result = await bcrypt.compare(pw, data.password);
       const authenticatedUser = { id, name: uName };
       if (result) {
         const accessToken = setToken(authenticatedUser);
         return accessToken;
-      } 
+      }
       return '401';
-    } 
+    }
     console.error(err);
     return '404';
-  } 
+  }
   return '404';
 }
 
@@ -47,36 +52,30 @@ async function signUpDbQuery(name, pw) {
     const err = data;
     if (uName) {
       return '401';
-    } 
+    }
     console.error(err);
-    return '500'
-  } else {
-    const dataC = await db.createUser(name, hashedPassword);
-    console.log('1 new user added');
-    const authenticatedUser = { id: dataC.user_id, name: dataC.user_name };
-    if (dataC.user_id) {
-      return setToken(authenticatedUser);
-    } 
     return '500';
   }
-}
-
-function setToken(authenticatedUser) {
-  const accessToken = jwt.sign(authenticatedUser, process.env.ACCESS_TOKEN_SECRET);
-  return accessToken;
+  const dataC = await db.createUser(name, hashedPassword);
+  console.log('1 new user added');
+  const authenticatedUser = { id: dataC.user_id, name: dataC.user_name };
+  if (dataC.user_id) {
+    return setToken(authenticatedUser);
+  }
+  return '500';
 }
 
 // Middlewear for sending cookie information to client side
 function tokenCheck(authCookie) {
   if (authCookie === null) {
     return '401';
-  } 
+  }
   jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       console.error(err);
       return '403';
-    } 
-      return user;
+    }
+    return user;
   });
 }
 
@@ -86,7 +85,7 @@ async function queryList(usrId) {
   if (lists) {
     return lists;
   }
-  return'500';
+  return '500';
 }
 
 // Save new list
@@ -102,10 +101,10 @@ async function newList(usrId, cDate, dDate, item) {
 // Save updated list
 async function updatedList(itemId, usrId, dDate, item) {
   await db.updateList(itemId, usrId, dDate, item);
-  const updatedList = await db.getList(usrId);
-  if (updatedList) {
-    return updatedList;
-  } 
+  const updatedLists = await db.getList(usrId);
+  if (updatedLists) {
+    return updatedLists;
+  }
   return '500';
 }
 
@@ -115,7 +114,7 @@ async function deletedList(itemId, usrId) {
   const changedList = await db.getList(usrId);
   if (changedList) {
     return changedList;
-  } 
+  }
   return '500';
 }
 
