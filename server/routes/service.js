@@ -1,9 +1,9 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const db = require('../db/db');
-
 
 // Check if the user is already authenticated
 function checkAuthStatus(authCookie) {
@@ -13,7 +13,7 @@ function checkAuthStatus(authCookie) {
       return '403';
     }
   });
-};
+}
 
 // Check user existense
 async function signInDbQuery(name, pw) {
@@ -30,17 +30,17 @@ async function signInDbQuery(name, pw) {
           if (result) {
             checkedReturn = setToken(authenticatedUser);
           } else {
-            checkedReturn = '401'
+            checkedReturn = '401';
           }
         });
     } else {
       console.error(err);
     }
   } else {
-    checkedReturn = '404'
+    checkedReturn = '404';
   }
   return checkedReturn;
-};
+}
 
 // Create a new user
 async function signUpDbQuery(name, pw) {
@@ -51,7 +51,7 @@ async function signUpDbQuery(name, pw) {
     const uName = data.user_name;
     const err = data;
     if (uName) {
-      createdReturn = '401'
+      createdReturn = '401';
     } else {
       console.error(err);
     }
@@ -62,7 +62,7 @@ async function signUpDbQuery(name, pw) {
     if (dataC.user_id) {
       createdReturn = setToken(authenticatedUser);
     } else {
-      createdReturn = '500'
+      createdReturn = '500';
     }
   }
   return createdReturn;
@@ -79,8 +79,8 @@ function tokenCheck(authCookie) {
   if (authCookie === null) {
     checkedToken = '401';
   } else {
-    jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => { 
-      if(err) {
+    jwt.verify(authCookie, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
         checkedToken = '403';
       } else {
         checkedToken = user;
@@ -92,7 +92,7 @@ function tokenCheck(authCookie) {
 
 // Get user's lists on the sign in
 async function queryList(usrId) {
-  let queryResult
+  let queryResult;
   const lists = await db.getList(usrId);
   if (lists) {
     queryResult = lists;
@@ -107,7 +107,7 @@ async function newList(usrId, cDate, dDate, item) {
   let createdList;
   await db.createList(usrId, cDate, dDate, item);
   const addedList = await db.getList(usrId);
-  if(addedList) {
+  if (addedList) {
     createdList = addedList;
   } else {
     createdList = '500';
@@ -120,23 +120,23 @@ async function updatedList(itemId, usrId, dDate, item) {
   let modifiedList;
   await db.updateList(itemId, usrId, dDate, item);
   const updatedList = await db.getList(usrId);
-  if(updatedList) {
+  if (updatedList) {
     modifiedList = updatedList;
   } else {
-    modifiedList = '500'
+    modifiedList = '500';
   }
   return modifiedList;
 }
 
 // Delete list
-async function deletedList(itemId, usrId){
+async function deletedList(itemId, usrId) {
   let deletedList;
   await db.deleteList(itemId, usrId);
   const changedList = await db.getList(usrId);
   if (changedList) {
     deletedList = changedList;
   } else {
-    deletedList = '500'
+    deletedList = '500';
   }
   return deletedList;
 }
@@ -149,5 +149,5 @@ module.exports = {
   queryList,
   newList,
   updatedList,
-  deletedList
-}
+  deletedList,
+};

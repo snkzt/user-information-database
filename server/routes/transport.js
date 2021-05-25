@@ -1,10 +1,4 @@
-// require('dotenv').config();
-// const bcrypt = require('bcrypt');
-
-// const saltRounds = 10;
-// const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
-// const db = require('../db/db');
 const service = require('./service');
 
 // Check if the user is already authenticated
@@ -14,8 +8,8 @@ const routeAccessibility = (req, res, next) => {
     const returnCheckAuth = service.checkAuthStatus(authCookie);
     if (returnCheckAuth === '403') {
       return res.sendStatus(403);
-    } 
-      res.redirect('/authenticated');
+    }
+    res.redirect('/authenticated');
   } else {
     next();
   }
@@ -36,7 +30,7 @@ const signIn = async (req, res) => {
     } else if (token) {
       res.setHeader('Set-Cookie', cookie.serialize('AccessToken', token, { httpOnly: true }));
       res.status(200).send({ existing: true });
-    } 
+    }
   } else {
     console.error('User name input empty');
     res.sendStatus(400).send({ input: false });
@@ -78,7 +72,7 @@ function authenticateToken(req, res, next) {
   const checkedToken = service.tokenCheck(authCookie);
   if (checkedToken === '401') {
     return res.sendStatus(401);
-  } else if (checkedToken === '403') {
+  } if (checkedToken === '403') {
     res.sendStatus(403);
   } else if (checkedToken) {
     req.user = checkedToken;
@@ -104,7 +98,7 @@ const createList = async (req, res) => {
   const usrId = req.body.user_id;
   const cDate = req.body.create_date;
   const dDate = req.body.due_date;
-  const item = req.body.item;
+  const { item } = req.body;
   const createdList = await service.newList(usrId, cDate, dDate, item);
   if (createdList === '500') {
     console.log('Save failed');
@@ -121,12 +115,12 @@ const updateList = async (req, res) => {
   const itemId = req.body.item_id;
   const usrId = req.body.user_id;
   const dDate = req.body.due_date;
-  const item = req.body.item;
-  const updatedList = service.updatedList(itemId, usrId, dDate, item)
+  const { item } = req.body;
+  const updatedList = service.updatedList(itemId, usrId, dDate, item);
   if (updatedList === '500') {
     console.log('Could not retrieve lists');
     res.status(500).send({ existing: false });
-  } else if (updatedList){
+  } else if (updatedList) {
     res.lists = updatedList;
     res.status(200).send(res.lists);
   }
@@ -140,7 +134,7 @@ const deleteList = async (req, res) => {
   if (deletedList === '500') {
     console.log('Could not retrieve lists');
     res.status(500).send({ existing: false });
-  } else if (deletedList){
+  } else if (deletedList) {
     console.log('1 list deleted');
     res.lists = deletedList;
     res.status(200).send(res.lists);
@@ -156,5 +150,5 @@ module.exports = {
   getList,
   createList,
   updateList,
-  deleteList
+  deleteList,
 };

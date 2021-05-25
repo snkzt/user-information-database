@@ -47,5 +47,5 @@
     "eslint-plugin-promise": "^4.3.1",
     "mocha": "^8.4.0"
   },
-  "eslintIgnore": ["sign.js", "main.js"]
+  "eslintIgnore": ["**/js"]
 }
