@@ -65,15 +65,30 @@ async function getList(usrId) {
 }
 
 async function createList(usrId, cDate, dDate, item) {
-  await db.run(`INSERT INTO list (user_id, create_date, due_date, item) VALUES ('${usrId}', '${cDate}', '${dDate}', '${item}')`);
+  try {
+    await db.run(`INSERT INTO list (user_id, create_date, due_date, item) VALUES ('${usrId}', '${cDate}', '${dDate}', '${item}')`);
+  } catch (err) {
+    console.error(err);
+    return (err);
+  }
 }
 
 async function updateList(itemId, usrId, dDate, item) {
-  await db.run(`UPDATE list SET due_date='${dDate}', item='${item}' WHERE user_id='${usrId}' AND item_id='${itemId}'`);
+  try {
+    await db.run(`UPDATE list SET due_date='${dDate}', item='${item}' WHERE user_id='${usrId}' AND item_id='${itemId}'`);
+  } catch (err) {
+    console.error(err);
+    return (err);
+  }
 }
 
 async function deleteList(itemId, usrId) {
-  await db.run(`DELETE FROM list WHERE user_id='${usrId}' AND item_id='${itemId}'`);
+  try {
+    await db.run(`DELETE FROM list WHERE user_id='${usrId}' AND item_id='${itemId}'`);
+  } catch (err) {
+    console.error(err);
+    return (err);
+  }
 }
 
 module.exports = {

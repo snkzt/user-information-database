@@ -8,7 +8,7 @@ const routeAccessibility = (req, res, next) => {
     const returnCheckAuth = service.checkAuthStatus(authCookie);
     if (returnCheckAuth === '403') {
       res.sendStatus(403);
-    } if (returnCheckAuth === '200') {
+    } else if (returnCheckAuth === '200') {
       res.redirect('/authenticated');
     }
   } else {
@@ -73,11 +73,9 @@ function authenticateToken(req, res, next) {
   const checkedToken = service.tokenCheck(authCookie);
   if (checkedToken === '401') {
     res.sendStatus(401);
-  }
-  if (checkedToken === '403') {
+  } else if (checkedToken === '403') {
     res.sendStatus(403);
-  }
-  if (checkedToken) {
+  } else if (checkedToken) {
     req.user = checkedToken;
     next();
   }
