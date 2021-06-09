@@ -18,8 +18,12 @@ function checkAuthStatus(authCookie) {
 }
 
 function setToken(authenticatedUser) {
+<<<<<<< Updated upstream
   const accessToken = jwt.sign(authenticatedUser, process.env.ACCESS_TOKEN_SECRET);
   return accessToken;
+=======
+  return jwt.sign(authenticatedUser, process.env.ACCESS_TOKEN_SECRET);
+>>>>>>> Stashed changes
 }
 
 // Check user existense
@@ -28,17 +32,27 @@ async function signInDbQuery(name, pw) {
   if (data) {
     const id = data.user_id;
     const uName = data.user_name;
+<<<<<<< Updated upstream
     const err = data;
+=======
+>>>>>>> Stashed changes
     if (id && uName) {
       const result = await bcrypt.compare(pw, data.password);
       const authenticatedUser = { id, name: uName };
       if (result) {
+<<<<<<< Updated upstream
         const accessToken = setToken(authenticatedUser);
         return accessToken;
       }
       return '401';
     }
     console.error(err);
+=======
+        return setToken(authenticatedUser);
+      }
+      return '401';
+    }
+>>>>>>> Stashed changes
     return '404';
   }
   return '404';
@@ -50,11 +64,17 @@ async function signUpDbQuery(name, pw) {
   const data = await db.checkUp(name);
   if (data) {
     const uName = data.user_name;
+<<<<<<< Updated upstream
     const err = data;
     if (uName) {
       return '401';
     }
     console.error(err);
+=======
+    if (uName) {
+      return '401';
+    }
+>>>>>>> Stashed changes
     return '500';
   }
   const dataC = await db.createUser(name, hashedPassword);
@@ -81,7 +101,11 @@ function tokenCheck(authCookie) {
   return token;
 }
 
+<<<<<<< Updated upstream
 // Get user's lists on the sign in
+=======
+// Get user's item lists on the sign in
+>>>>>>> Stashed changes
 async function queryList(usrId) {
   const lists = await db.getList(usrId);
   if (lists) {
@@ -92,36 +116,69 @@ async function queryList(usrId) {
 
 // Save new list
 async function newList(usrId, cDate, dDate, item) {
+<<<<<<< Updated upstream
   await db.createList(usrId, cDate, dDate, item);
   const addedList = await db.getList(usrId);
   if (addedList) {
     return addedList;
+=======
+  const listAdded = await db.createList(usrId, cDate, dDate, item);
+  if (listAdded === '200') {
+    const addedList = await db.getList(usrId);
+    if (addedList) {
+      return addedList;
+    }
+>>>>>>> Stashed changes
   }
   return '500';
 }
 
+<<<<<<< Updated upstream
 // Save updated list
 async function updatedList(itemId, usrId, dDate, item) {
   await db.updateList(itemId, usrId, dDate, item);
   const updatedLists = await db.getList(usrId);
   if (updatedLists) {
     return updatedLists;
+=======
+// Save modified list
+async function updatedList(itemId, usrId, dDate, item) {
+  const listUpdated = await db.updateList(itemId, usrId, dDate, item);
+  if (listUpdated === '200') {
+    const updatedLists = await db.getList(usrId);
+    if (updatedLists) {
+      return updatedLists;
+    }
+>>>>>>> Stashed changes
   }
   return '500';
 }
 
 // Delete list
 async function deletedList(itemId, usrId) {
+<<<<<<< Updated upstream
   await db.deleteList(itemId, usrId);
   const changedList = await db.getList(usrId);
   if (changedList) {
     return changedList;
+=======
+  const listdeleted = await db.deleteList(itemId, usrId);
+  if (listdeleted === '200') {
+    const changedList = await db.getList(usrId);
+    if (changedList) {
+      return changedList;
+    }
+>>>>>>> Stashed changes
   }
   return '500';
 }
 
 module.exports = {
   checkAuthStatus,
+<<<<<<< Updated upstream
+=======
+  setToken,
+>>>>>>> Stashed changes
   signInDbQuery,
   signUpDbQuery,
   tokenCheck,
