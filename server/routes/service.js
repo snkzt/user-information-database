@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+
 const db = require('../db/db');
 
 // Check if the user is already authenticated
@@ -35,7 +36,7 @@ async function signInDbQuery(name, pw) {
       }
       return '401';
     }
-    return '404';
+    return '500';
   }
   return '404';
 }
@@ -49,12 +50,13 @@ async function signUpDbQuery(name, pw) {
     if (uName) {
       return '401';
     }
-    return '500';
+  return '500'
   }
+  
   const dataC = await db.createUser(name, hashedPassword);
   console.log('1 new user added');
   const authenticatedUser = { id: dataC.user_id, name: dataC.user_name };
-  if (dataC.user_id) {
+  if (dataC.user_id && dataC.user_name) {
     return setToken(authenticatedUser);
   }
   return '500';
@@ -76,16 +78,18 @@ function tokenCheck(authCookie) {
 }
 
 // Get user's item lists on the sign in
-async function queryList(usrId) {
+async function getListByUser(usrId) {
   const lists = await db.getList(usrId);
-  if (lists) {
+  if (lists === Error) {
+    return '500';
+  } else if (lists) {
     return lists;
   }
   return '500';
 }
 
-// Save new list
-async function newList(usrId, cDate, dDate, item) {
+// Save newly created list
+async function createList(usrId, cDate, dDate, item) {
   const listAdded = await db.createList(usrId, cDate, dDate, item);
   if (listAdded === '200') {
     const addedList = await db.getList(usrId);
@@ -97,7 +101,7 @@ async function newList(usrId, cDate, dDate, item) {
 }
 
 // Save modified list
-async function updatedList(itemId, usrId, dDate, item) {
+async function updateList(itemId, usrId, dDate, item) {
   const listUpdated = await db.updateList(itemId, usrId, dDate, item);
   if (listUpdated === '200') {
     const updatedLists = await db.getList(usrId);
@@ -109,7 +113,7 @@ async function updatedList(itemId, usrId, dDate, item) {
 }
 
 // Delete list
-async function deletedList(itemId, usrId) {
+async function deleteList(itemId, usrId) {
   const listdeleted = await db.deleteList(itemId, usrId);
   if (listdeleted === '200') {
     const changedList = await db.getList(usrId);
@@ -126,8 +130,8 @@ module.exports = {
   signInDbQuery,
   signUpDbQuery,
   tokenCheck,
-  queryList,
-  newList,
-  updatedList,
-  deletedList,
+  getListByUser,
+  createList,
+  updateList,
+  deleteList,
 };

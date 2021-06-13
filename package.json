@@ -4,7 +4,7 @@
   "description": "*MAKE YOUR WISH TO MAKE IT HAPPEN*",
   "main": "index.js",
   "scripts": {
-    "test": "mocha './server/routes/*.test.js' || true",
+    "test": "mocha './server/routes/*.test.js'",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "lint": "eslint .",
@@ -41,7 +41,6 @@
   "devDependencies": {
     "@types/sinon": "^10.0.2",
     "chai": "^4.3.4",
-    "chai-as-promised": "^7.1.1",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-standard": "^16.0.2",
