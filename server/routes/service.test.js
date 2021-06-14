@@ -32,7 +32,7 @@ describe('Serivice layer unit test', () => {
   });
 
   // Test for function setToken
-  it('Should be an error for generating an access token', () => {
+  it('Should retunrn an error for jwt.sign returns an error', () => {
     sinon.stub(jwt, 'sign').returns(new Error());
 
     const result = service.setToken('tokenise_info');
@@ -165,6 +165,7 @@ describe('Serivice layer unit test', () => {
 
     expect(result).to.be.an('array');
     expect(result).to.have.lengthOf(3);
+    expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
   it('Should return 500 for no list retrieved from the database', async () => {
@@ -185,6 +186,7 @@ describe('Serivice layer unit test', () => {
 
     expect(result).to.be.an('array');
     expect(result).to.have.lengthOf(3);
+    expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
   it('Should return 500 for failure of creating new list', async () => {
@@ -204,6 +206,7 @@ describe('Serivice layer unit test', () => {
 
     expect(result).to.be.an('array');
     expect(result).to.have.lengthOf(3);
+    expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
   it('Should return 500 for Error returned for failed database task', async () => {
@@ -217,12 +220,13 @@ describe('Serivice layer unit test', () => {
   // Test for function deleteList
   it('Should return updated lists for successful database task', async () => {
     sinon.stub(db, 'deleteList').returns('200');
-    sinon.stub(db, 'getList').returns(['correct','updated','list']);
+    sinon.stub(db, 'getList').returns(['correct', 'updated', 'list']);
 
     const result = await service.deleteList(99999, 99999);
 
     expect(result).to.be.an('array');
     expect(result).to.have.lengthOf(3);
+    expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
   it('Should return 500 for failed database task', async () => {
