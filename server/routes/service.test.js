@@ -23,7 +23,7 @@ describe('Serivice layer unit test', () => {
     expect(result).to.equal('200');
   });
 
-  it('Should return string 403 for failure', () => {
+  it('Should return string 403 if jwt.verify fails', () => {
     sinon.stub(jwt, 'verify').withArgs('incorrect_info').returns('403');
 
     const result = service.checkAuthStatus('incorrect_info');
@@ -32,7 +32,7 @@ describe('Serivice layer unit test', () => {
   });
 
   // Test for function setToken
-  it('Should retunrn an error for jwt.sign returns an error', () => {
+  it('Should retunrn an error if jwt.sign returns an error', () => {
     sinon.stub(jwt, 'sign').returns(new Error());
 
     const result = service.setToken('tokenise_info');
@@ -59,7 +59,7 @@ describe('Serivice layer unit test', () => {
     expect(result).to.equal('404');
   });
 
-  it('Should return 500 for missing user id from the retrieved data', async () => {
+  it('Should return 500 if the user id is missing from the retrieved data', async () => {
     sinon.stub(db, 'checkIn').returns({ user_id: null, user_name: 'correct_name', password: 'correct_pw' });
 
     const result = await service.signInDbQuery('correct_name', 'correct_pw');
@@ -67,7 +67,7 @@ describe('Serivice layer unit test', () => {
     expect(result).to.equal('500');
   });
 
-  it('Should return 500 for missing user name from the retrieved data', async () => {
+  it('Should return 500 if user name is missing from the retrieved data', async () => {
     sinon.stub(db, 'checkIn').returns({ user_id: 9999, user_name: null, password: 'correct_pw' });
 
     const result = await service.signInDbQuery('correct_name', 'correct_pw');
@@ -163,8 +163,6 @@ describe('Serivice layer unit test', () => {
 
     const result = await service.getListByUser('correct_userId');
 
-    expect(result).to.be.an('array');
-    expect(result).to.have.lengthOf(3);
     expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
@@ -184,8 +182,6 @@ describe('Serivice layer unit test', () => {
 
     const result = await service.createList(99999, 'createdDate', 'dueDate', 'item');
 
-    expect(result).to.be.an('array');
-    expect(result).to.have.lengthOf(3);
     expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
@@ -204,8 +200,6 @@ describe('Serivice layer unit test', () => {
 
     const result = await service.createList(99999, 99999, 'dueDate', 'item');
 
-    expect(result).to.be.an('array');
-    expect(result).to.have.lengthOf(3);
     expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
@@ -218,18 +212,16 @@ describe('Serivice layer unit test', () => {
   });
 
   // Test for function deleteList
-  it('Should return updated lists for successful database task', async () => {
+  it('Should return updated lists for successful data deletion from the database', async () => {
     sinon.stub(db, 'deleteList').returns('200');
     sinon.stub(db, 'getList').returns(['correct', 'updated', 'list']);
 
     const result = await service.deleteList(99999, 99999);
 
-    expect(result).to.be.an('array');
-    expect(result).to.have.lengthOf(3);
     expect(result).to.deep.equal(['correct', 'updated', 'list']);
   });
 
-  it('Should return 500 for failed database task', async () => {
+  it('Should return 500 if db.deleteList returns an error', async () => {
     sinon.stub(db, 'deleteList').returns(new Error());
 
     const result = await service.deleteList(99999, 99999);

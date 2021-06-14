@@ -35,6 +35,9 @@ const signIn = async (req, res) => {
     } else if (token) {
       res.setHeader('Set-Cookie', cookie.serialize('AccessToken', token, { httpOnly: true }));
       res.status(200).send({ existing: true });
+    } else {
+      console.log('Unknown error occured')
+      res.sendStatus(500).send({ error: true})
     }
   }
 };
@@ -68,7 +71,7 @@ const signOut = async (req, res, next) => {
   next();
 };
 
-// Middlewear for sending cookie information to client side
+// Middleware for sending cookie information to client side
 function authenticateToken(req, res, next) {
   const authCookie = req.cookies.AccessToken;
   const checkedToken = service.tokenCheck(authCookie);
@@ -90,8 +93,7 @@ const getList = async (req, res) => {
     console.log('No list');
     res.status(500).send({ existing: false });
   } else {
-    res.lists = lists;
-    res.status(200).send(res.lists);
+    res.status(200).send(lists);
   }
 };
 
@@ -107,8 +109,7 @@ const createList = async (req, res) => {
     res.status(500).send({ existing: false });
   } else if (createdList) {
     console.log('1 new list added');
-    res.list = createdList;
-    res.status(200).send(res.list);
+    res.status(200).send(createdList);
   }
 };
 
@@ -123,8 +124,7 @@ const updateList = async (req, res) => {
     console.log('Could not retrieve lists');
     res.status(500).send({ existing: false });
   } else if (updatedList) {
-    res.lists = updatedList;
-    res.status(200).send(res.lists);
+    res.status(200).send(updatedList);
   }
 };
 
@@ -138,8 +138,7 @@ const deleteList = async (req, res) => {
     res.status(500).send({ existing: false });
   } else if (deletedList) {
     console.log('1 list deleted');
-    res.lists = deletedList;
-    res.status(200).send(res.lists);
+    res.status(200).send(deletedList);
   }
 };
 

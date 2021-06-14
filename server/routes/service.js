@@ -80,7 +80,7 @@ function tokenCheck(authCookie) {
 // Get user's item lists on the sign in
 async function getListByUser(usrId) {
   const lists = await db.getList(usrId);
-  if (lists === Error) {
+  if (lists instanceof Error) {
     return '500';
   } else if (lists) {
     return lists;
