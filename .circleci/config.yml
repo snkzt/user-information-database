@@ -11,8 +11,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run tests
-          command: npm test
+          name: Install npm
+          command: npm install
 
 workflows:
   build-and-test:
