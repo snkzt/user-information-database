@@ -1,4 +1,5 @@
 const cookie = require('cookie');
+
 const service = require('./service');
 
 // Check if the user is already authenticated
@@ -28,13 +29,16 @@ const signIn = async (req, res) => {
     } else if (token === '404') {
       console.log('No record matches');
       res.status(401).send({ existing: false });
+    } else if (token === '500') {
+      console.error('User name input empty');
+      res.sendStatus(500).send({ input: false });
     } else if (token) {
       res.setHeader('Set-Cookie', cookie.serialize('AccessToken', token, { httpOnly: true }));
       res.status(200).send({ existing: true });
+    } else {
+      console.log('Unknown error occured')
+      res.sendStatus(500).send({ error: true})
     }
-  } else {
-    console.error('User name input empty');
-    res.sendStatus(400).send({ input: false });
   }
 };
 
@@ -67,7 +71,7 @@ const signOut = async (req, res, next) => {
   next();
 };
 
-// Middlewear for sending cookie information to client side
+// Middleware for sending cookie information to client side
 function authenticateToken(req, res, next) {
   const authCookie = req.cookies.AccessToken;
   const checkedToken = service.tokenCheck(authCookie);
@@ -84,13 +88,12 @@ function authenticateToken(req, res, next) {
 // Get user's lists on the sign in
 const getList = async (req, res) => {
   const usrId = req.body.id;
-  const lists = await service.queryList(usrId);
+  const lists = await service.getListByUser(usrId);
   if (lists === '500') {
-    console.log('Could not retrieve lists');
+    console.log('No list');
     res.status(500).send({ existing: false });
   } else {
-    res.lists = lists;
-    res.status(200).send(res.lists);
+    res.status(200).send(lists);
   }
 };
 
@@ -100,14 +103,13 @@ const createList = async (req, res) => {
   const cDate = req.body.create_date;
   const dDate = req.body.due_date;
   const { item } = req.body;
-  const createdList = await service.newList(usrId, cDate, dDate, item);
+  const createdList = await service.createList(usrId, cDate, dDate, item);
   if (createdList === '500') {
     console.log('Save failed');
     res.status(500).send({ existing: false });
   } else if (createdList) {
     console.log('1 new list added');
-    res.list = createdList;
-    res.status(200).send(res.list);
+    res.status(200).send(createdList);
   }
 };
 
@@ -117,13 +119,12 @@ const updateList = async (req, res) => {
   const usrId = req.body.user_id;
   const dDate = req.body.due_date;
   const { item } = req.body;
-  const updatedList = service.updatedList(itemId, usrId, dDate, item);
+  const updatedList = service.updateList(itemId, usrId, dDate, item);
   if (updatedList === '500') {
     console.log('Could not retrieve lists');
     res.status(500).send({ existing: false });
   } else if (updatedList) {
-    res.lists = updatedList;
-    res.status(200).send(res.lists);
+    res.status(200).send(updatedList);
   }
 };
 
@@ -131,14 +132,13 @@ const updateList = async (req, res) => {
 const deleteList = async (req, res) => {
   const itemId = req.body.item_id;
   const usrId = req.body.user_id;
-  const deletedList = service.deletedList(itemId, usrId);
+  const deletedList = service.deleteList(itemId, usrId);
   if (deletedList === '500') {
     console.log('Could not retrieve lists');
     res.status(500).send({ existing: false });
   } else if (deletedList) {
     console.log('1 list deleted');
-    res.lists = deletedList;
-    res.status(200).send(res.lists);
+    res.status(200).send(deletedList);
   }
 };
 
