@@ -10,8 +10,10 @@ jobs:
       - image: cimg/node:15.1
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      - node/install-packages
+      - run:
+          name: Run tests
+          command: npm test
 
 workflows:
   build-and-test:
