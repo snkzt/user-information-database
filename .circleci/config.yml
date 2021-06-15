@@ -5,6 +5,14 @@ orbs:
   node: circleci/node@4.5
 
 jobs:
+  eslint:
+    - run:
+        name: eslint
+        command: |
+          mkdir -p /tmp/test-reports/eslint
+          node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
+    - store_test_results:
+        path: /tmp/test-reports
   build-and-test: 
     executor:
       name: node/default
@@ -18,6 +26,9 @@ jobs:
           command: npm test
 
 workflows:
+  eslint:
+    jobs:
+      - eslint
   build-and-test:
     jobs:
        - build-and-test
