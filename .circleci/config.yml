@@ -5,11 +5,10 @@ orbs:
   node: circleci/node@4.5
 
 jobs:
-  eslint:
+  build-and-test: 
     executor:
       name: node/default
     steps:
-      - checkout
       - run:
           name: eslint
           command: |
@@ -17,11 +16,6 @@ jobs:
             node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
       - store_test_results:
           path: /tmp/test-reports
-  
-  build-and-test: 
-    executor:
-      name: node/default
-    steps:
       - run:
           name: Install npm
           command: npm install
@@ -30,9 +24,6 @@ jobs:
           command: npm test
 
 workflows:
-  eslint:
-    jobs:
-      - eslint
   build-and-test:
     jobs:
        - build-and-test
