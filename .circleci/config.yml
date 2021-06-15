@@ -9,12 +9,12 @@ jobs:
     docker:
       - image: cimg/node:15.1
     steps:
+      - checkout
       - node/install-packages
       - run:
           name: Run tests
           command: npm test
 
 workflows:
-  sample: 
     jobs:
       - build-and-test
