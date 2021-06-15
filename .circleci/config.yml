@@ -6,18 +6,22 @@ orbs:
 
 jobs:
   eslint:
-    - run:
-        name: eslint
-        command: |
-          mkdir -p /tmp/test-reports/eslint
-          node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
-    - store_test_results:
-        path: /tmp/test-reports
-  build-and-test: 
     executor:
       name: node/default
     steps:
       - checkout
+      - run:
+          name: eslint
+          command: |
+            mkdir -p /tmp/test-reports/eslint
+            node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
+      - store_test_results:
+          path: /tmp/test-reports
+  
+  build-and-test: 
+    executor:
+      name: node/default
+    steps:
       - run:
           name: Install npm
           command: npm install
