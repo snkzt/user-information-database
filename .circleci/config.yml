@@ -6,8 +6,8 @@ orbs:
 
 jobs:
   build-and-test: 
-    docker:
-      - image: cimg/node:15.1
+    executor:
+      name: node/default
     steps:
       - checkout
       - run:
