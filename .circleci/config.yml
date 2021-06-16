@@ -9,13 +9,15 @@ jobs:
     executor:
       name: node/default
     steps:
+      # - run:
+      #     name: eslint
+      #     command: |
+      #       mkdir -p /tmp/test-reports/eslint
+      #       node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
+      # - store_test_results:
+      #     path: /tmp/test-reports
       - run:
-          name: eslint
-          command: |
-            mkdir -p /tmp/test-reports/eslint
-            node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
-      - store_test_results:
-          path: /tmp/test-reports
+          npm run lintfix
       - run:
           name: Install npm
           command: npm install
