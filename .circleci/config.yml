@@ -9,6 +9,7 @@ jobs:
     executor:
       name: node/default
     steps:
+      - checkout
       - run:
           command: |
             mkdir -p /tmp/test-reports/eslint
