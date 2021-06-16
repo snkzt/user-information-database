@@ -10,7 +10,7 @@ jobs:
       name: node/default
     steps:
       - run:
-          npm run lintfix
+          npm run lint
       - run:
           name: Install npm
           command: npm install
