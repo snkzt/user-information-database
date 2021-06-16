@@ -1,4 +1,35 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
+# version: 2.1
+
+# orbs:
+#   node: circleci/node@4.5
+
+# jobs:
+#   build-and-test: 
+#     executor:
+#       name: node/default
+#     steps:
+#       - checkout
+#       - run:
+#           command: |
+#             mkdir -p /tmp/test-reports/eslint
+#             node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
+#           when: always
+#       - store_test_results:
+#           path: /tmp/test-reports
+#       - run:
+#           name: Install npm
+#           command: npm install
+#       - run:  
+#           name: Run test
+#           command: npm test
+
+# workflows:
+#   build-and-test:
+#     jobs:
+#        - build-and-test
+
+
 version: 2.1
 
 orbs:
@@ -9,22 +40,27 @@ jobs:
     executor:
       name: node/default
     steps:
+      - restore_cache:
+          keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
       - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .git
+      - restore_cache:
+          key: v1-npm-deps-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run:
+          name: lint
           command: |
             mkdir -p /tmp/test-reports/eslint
             node_modules/.bin/eslint . --format junit --output-file /tmp/test-reports/eslint/results.xml
-          when: always
       - store_test_results:
           path: /tmp/test-reports
-      - run:
-          name: Install npm
-          command: npm install
-      - run:  
-          name: Run test
-          command: npm test
-
-workflows:
-  build-and-test:
-    jobs:
-       - build-and-test
