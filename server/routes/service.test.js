@@ -159,7 +159,7 @@ describe('Serivice layer unit test', () => {
 
   // Test for function getListByUser
   it('Should return item lists for the valid user id', async () => {
-    sinon.stub(db, 'getList').returns(['correct','updated','list']);
+    sinon.stub(db, 'getList').returns(['correct', 'updated', 'list']);
 
     const result = await service.getListByUser('correct_userId');
 
@@ -178,7 +178,7 @@ describe('Serivice layer unit test', () => {
   // Test for function createist
   it('Should return lists', async () => {
     sinon.stub(db, 'createList').returns('200');
-    sinon.stub(db, 'getList').returns(['correct','updated','list']);
+    sinon.stub(db, 'getList').returns(['correct', 'updated', 'list']);
 
     const result = await service.createList(99999, 'createdDate', 'dueDate', 'item');
 
@@ -196,7 +196,7 @@ describe('Serivice layer unit test', () => {
   // Test for function updateList
   it('Should return updated lists', async () => {
     sinon.stub(db, 'updateList').returns('200');
-    sinon.stub(db, 'getList').returns(['correct','updated','list']);
+    sinon.stub(db, 'getList').returns(['correct', 'updated', 'list']);
 
     const result = await service.createList(99999, 99999, 'dueDate', 'item');
 

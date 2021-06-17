@@ -50,9 +50,9 @@ async function signUpDbQuery(name, pw) {
     if (uName) {
       return '401';
     }
-  return '500'
+    return '500';
   }
-  
+
   const dataC = await db.createUser(name, hashedPassword);
   console.log('1 new user added');
   const authenticatedUser = { id: dataC.user_id, name: dataC.user_name };
@@ -82,7 +82,7 @@ async function getListByUser(usrId) {
   const lists = await db.getList(usrId);
   if (lists instanceof Error) {
     return '500';
-  } else if (lists) {
+  } if (lists) {
     return lists;
   }
   return '500';
