@@ -36,8 +36,8 @@ const signIn = async (req, res) => {
       res.setHeader('Set-Cookie', cookie.serialize('AccessToken', token, { httpOnly: true }));
       res.status(200).send({ existing: true });
     } else {
-      console.log('Unknown error occured')
-      res.sendStatus(500).send({ error: true})
+      console.log('Unknown error occured');
+      res.sendStatus(500).send({ error: true });
     }
   }
 };
