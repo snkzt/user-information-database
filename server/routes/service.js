@@ -85,7 +85,7 @@ async function getListByUser(usrId) {
   } if (lists) {
     return lists;
   }
-  return '500';;
+  return '500';
 }
 
 // Save newly created list
