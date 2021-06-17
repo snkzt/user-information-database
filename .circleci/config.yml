@@ -9,18 +9,18 @@ jobs:
     executor:
       name: node/default
     steps:
-      - restore_cache:
-          keys:
-            - source-v1-{{ .Branch }}-{{ .Revision }}
-            - source-v1-{{ .Branch }}-
-            - source-v1-
+      # - restore_cache:
+      #     keys:
+      #       - source-v1-{{ .Branch }}-{{ .Revision }}
+      #       - source-v1-{{ .Branch }}-
+      #       - source-v1-
       - checkout
-      - save_cache:
-          key: source-v1-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - .git
-      - restore_cache:
-          key: v1-npm-deps-{{ checksum "package.json" }}
+      # - save_cache:
+      #     key: source-v1-{{ .Branch }}-{{ .Revision }}
+      #     paths:
+      #       - .git
+      # - restore_cache:
+      #     key: v1-npm-deps-{{ checksum "package.json" }}
       - run: npm install
       - save_cache:
           key: v1-npm-deps-{{ checksum "package.json" }}
